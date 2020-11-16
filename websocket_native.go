@@ -4,6 +4,7 @@ package websocket
 
 import (
 	"context"
+	"fmt"
 	"net"
 	"net/url"
 
@@ -11,7 +12,7 @@ import (
 	"github.com/libp2p/go-libp2p-core/transport"
 	tptu "github.com/libp2p/go-libp2p-transport-upgrader"
 	ma "github.com/multiformats/go-multiaddr"
-	manet "github.com/multiformats/go-multiaddr-net"
+	manet "github.com/multiformats/go-multiaddr/net"
 )
 
 // WebsocketTransport is the actual go-libp2p transport
@@ -55,6 +56,7 @@ func NewWithOptions(opts ...Option) func(u *tptu.Upgrader) *WebsocketTransport {
 }
 
 func (t *WebsocketTransport) maDial(ctx context.Context, raddr ma.Multiaddr) (manet.Conn, error) {
+	fmt.Printf("Jim go-ws-transport native dial %v\n", raddr.String())
 	wsurl, err := parseMultiaddr(raddr)
 	if err != nil {
 		return nil, err

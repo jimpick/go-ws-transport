@@ -3,6 +3,7 @@
 package websocket
 
 import (
+	"fmt"
 	"io"
 	"net"
 	"sync"
@@ -29,6 +30,7 @@ func (c *Conn) Read(b []byte) (int, error) {
 
 	for {
 		n, err := c.reader.Read(b)
+		fmt.Printf("Jim ws reader: %v %v %v\n", n, err, b[:n])
 		switch err {
 		case io.EOF:
 			c.reader = nil

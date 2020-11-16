@@ -11,7 +11,7 @@ import (
 	"github.com/libp2p/go-libp2p-core/transport"
 	tptu "github.com/libp2p/go-libp2p-transport-upgrader"
 	ma "github.com/multiformats/go-multiaddr"
-	manet "github.com/multiformats/go-multiaddr-net"
+	manet "github.com/multiformats/go-multiaddr/net"
 )
 
 // WebsocketTransport is the actual go-libp2p transport
@@ -60,10 +60,13 @@ func (t *WebsocketTransport) maDial(ctx context.Context, raddr ma.Multiaddr) (mn
 		}
 	}()
 
+	fmt.Printf("Jim go-ws-transport browser dial %v\n", raddr.String())
 	wsurl, err := parseMultiaddr(raddr)
 	if err != nil {
+		fmt.Printf("Jim go-ws-transport dial err %v\n", err)
 		return nil, err
 	}
+	fmt.Printf("Jim go-ws-transport wsurl %v\n", wsurl)
 
 	rawConn := js.Global().Get("WebSocket").New(wsurl.String())
 	conn := NewConn(rawConn)
